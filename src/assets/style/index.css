@@ -1,0 +1,11 @@
+/* 自己的CSS文件 
+  myStyle.css  一些全局设置
+  homeStyle.css  首页相关样式
+  myCommponentsStyle.css  一些自定义的样式的枚举
+*/
+@import url('./myStyle.css'); 
+@import url('./homeStyle.css'); 
+@import url('./myCommponentsStyle.css'); 
+
+/* 项目搭建后自带的CSS文件 根据需求自行更改 */
+@import url('./style.css');

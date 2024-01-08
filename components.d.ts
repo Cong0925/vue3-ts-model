@@ -7,9 +7,25 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ElAffix: typeof import('element-plus/es')['ElAffix']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElCard: typeof import('element-plus/es')['ElCard']
+    ElDropdown: typeof import('element-plus/es')['ElDropdown']
+    ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
+    ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElInput: typeof import('element-plus/es')['ElInput']
+    ElRow: typeof import('element-plus/es')['ElRow']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SlideVerify: typeof import('./src/components/slideVerify.vue')['default']
+    Tinymce: typeof import('./src/components/tinymce.vue')['default']
+    Tinymce_copy: typeof import('./src/components/tinymce_copy.vue')['default']
+    Tinymce_vue2: typeof import('./src/components/tinymce_vue2.vue')['default']
+    Tinymce_vue3: typeof import('./src/components/tinymce_vue3.vue')['default']
+    Vditor: typeof import('./src/components/vditor.vue')['default']
   }
 }

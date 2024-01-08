@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import '@/assets/style/style.css'
+import '@/assets/style/index.css'
 import App from './App.vue'
 
 // 以下是 完整引入 element plus 时使用

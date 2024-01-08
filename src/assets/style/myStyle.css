@@ -1,0 +1,47 @@
+
+/* 网站整体所占宽度 */
+.layout_width{
+  width: 1250px;
+  margin: 0 auto;
+}
+/* 主体部分布局 */
+.main-layout {
+  width: 1250px;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+
+.main-layout img{
+  width: 1250px;
+}
+
+/* a  标签 */
+a{
+  text-decoration: none;
+  color: black;
+}
+
+/* 卡片 */
+.box-card {
+  height: 100%;
+}
+.box-card-list{
+  min-height: 750px;
+}
+
+/* 鼠标相关样式 */
+.mouse-hover-pointer:hover{
+  cursor: pointer;
+}
+.mouse-hover-default:hover{
+  cursor: default
+}
+
+
+/* border  相关 */
+.border_left{
+  border-left: 1px solid rgba(255, 255, 255, .2);
+}
+.border_right{
+  border-right: 1px solid rgba(255, 255, 255, .2);
+}

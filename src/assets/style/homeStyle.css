@@ -1,0 +1,50 @@
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-card {
+  width: 100%;
+  height: 540px;
+}
+
+.content {}
+
+ .content-pics {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+ .content-pics .pic-item img {
+  height: 200px;
+  width: 300px;
+}
+
+ .content-list {}
+
+ .content-list .list-item {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+}
+.pic-item:hover,
+.list-item:hover .text-middle {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.list-item:hover .text-large{
+  cursor: pointer;
+color: red;
+}
+
+.btn {
+  display: flex;
+  justify-content: end;
+}
+
+.btn .button-more {
+  padding: 0;
+}

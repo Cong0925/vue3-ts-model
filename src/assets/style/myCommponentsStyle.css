@@ -1,0 +1,59 @@
+/* 字体样式-大小 */
+.text-large-up-26 {
+  font-size: 26px;
+  cursor: default;
+}
+.text-large-up-24 {
+  font-size: 24px;
+  cursor: default;
+}
+.text-large-up-22 {
+  font-size: 22px;
+  cursor: default;
+}
+.text-large {
+  font-size: 20px;
+  cursor: default;
+}
+.text-middle-up{
+  font-size: 18px;
+  cursor: default;
+}
+.text-middle{
+  font-size: 16px;
+  cursor: default;
+}
+.text-middle-down{
+  font-size: 14px;
+  cursor: default;
+}
+.text-small{
+  font-size: 12px;
+  cursor: default;
+}
+/* 分割线 */
+.my-divider-black-large{
+  width: 100%;
+  border: 2px solid black;margin: 10px 0;
+}
+.my-divider-black-middle{
+  width: 100%;
+  border: 1.5px solid black;margin: 10px 0;
+}
+.my-divider-black-small{
+  width: 100%;
+  border: 1px solid black;margin: 5px 0;
+}
+
+.my-divider-grey-large{
+  width: 100%;
+  border: 2px solid rgb(228, 231, 237);margin: 10px 0;
+}
+.my-divider-grey-middle{
+  width: 100%;
+  border: 1.5px solid rgb(228, 231, 237);margin: 10px 0;
+}
+.my-divider-grey-small{
+  width: 100%;
+  border: 1px solid rgb(228, 231, 237);margin: 5px 0;
+}
