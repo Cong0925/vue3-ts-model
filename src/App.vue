@@ -1,24 +1,12 @@
-<script setup lang="ts">
-import Home from '@/views/home/index.vue'
-</script>
-
 <template>
-  <Home></Home>
+  <router-view></router-view>
+  <!-- <Home></Home> -->
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
+<script setup lang="ts">
+// import Home from '@/views/home/index.vue'
+</script>
 
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
+<style >
 
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

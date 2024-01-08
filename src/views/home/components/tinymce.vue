@@ -1,7 +1,7 @@
 <template>
   <div class="tinymce-boxz">
     <Editor v-model="content" :api-key="apiKey" :init="init" />
-  <el-button type="primary" @click="getContent">获取内容</el-button>
+    <el-button type="primary" @click="getContent">获取内容</el-button>
 
   </div>
 </template>
