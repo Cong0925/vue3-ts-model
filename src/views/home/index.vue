@@ -9,6 +9,10 @@
           <scoreShow></scoreShow>
         </div>
       </div>
+      <!-- 测试功能按钮 -->
+      <div>
+        <el-button type="primary" @click="testUseStore">打印store</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -19,6 +23,22 @@
 // import Tinymce3 from "@/components/tinymce_vue3.vue"
 import newsShow from './components/news.vue'
 import scoreShow from './components/actions.vue'
+
+import { useMyStore } from "@/stores/states"
+import { UserInfoState } from '@/stores/interface';
+
+const useStore = useMyStore()
+const testUseStore = () => {
+  let data: UserInfoState = {
+    user: 'admin',
+    ID: '12345',
+    age: '18',
+    sex: '男'
+  }
+  useStore.setUserInfo(data)
+  console.log(useStore.userForm);
+}
+
 </script>
 
 <style scoped>

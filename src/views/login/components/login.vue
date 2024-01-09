@@ -38,7 +38,7 @@
             <span @click.stop="go_page('findPassword')">忘记密码？</span>
             <span @click.stop="go_page('register')">注册</span>
           </label>
-         
+
         </div>
       </el-form-item>
 
@@ -72,7 +72,7 @@ const formRules = reactive<FormRules<typeof state.formData>>({
 // 记住密码，true 或 false
 const rem_pswd = ref(localStorage.getItem('rem_pswd'))
 
-const go_page = (path:string) => {
+const go_page = (path: string) => {
   router.push({
     name: 'login', // 替换为目标路由的名称或路径
     query: {
@@ -80,6 +80,8 @@ const go_page = (path:string) => {
     }
   })
 }
+
+
 
 const handleSubmita = (formEl: FormInstance | undefined) => {
   if (!formEl) return
@@ -102,10 +104,7 @@ interface CheckCodeType {
   code: string;
   isTrue: boolean;
 }
-const checkCode = reactive<CheckCodeType>({
-  code: "",
-  isTrue: false
-})
+
 
 // 生成随机验证码
 const generateCode = () => {
@@ -130,6 +129,10 @@ const checkCodeFun = (newValue: string) => {
     checkCode.isTrue = false
   }
 }
+const checkCode = reactive<CheckCodeType>({
+  code: identifyCode.value,
+  isTrue: false
+})
 </script>
 
 <style scoped>

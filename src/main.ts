@@ -13,9 +13,13 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // 导入新建的路由文件
 import router from "./router/index"
 
+import pinia from "./stores/index"
+
 
 const app = createApp(App)
 app.use(router)
+app.use(pinia)
+
 
 // 以下是 完整引入 element plus 时使用
 // app.use(ElementPlus)
