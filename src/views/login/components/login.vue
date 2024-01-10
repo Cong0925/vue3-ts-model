@@ -54,6 +54,26 @@
 </template>
 
 <script setup lang="ts">
+import { UseLoginApi } from "@/api/login/index"
+import { LoginState } from "@/api/login/types";
+
+const useLoginApi = UseLoginApi()
+const login = () => {
+  let data: LoginState = {
+    username: "admin",
+    password: "admin"
+  }
+  useLoginApi.login(data)
+    .then((res) => {
+      console.log(res);
+
+    })
+    .catch((err) => {
+      console.log(err);
+
+    })
+}
+
 import { reactive, ref } from 'vue';
 
 const state = reactive({
@@ -87,6 +107,7 @@ const handleSubmita = (formEl: FormInstance | undefined) => {
   if (!formEl) return
   formEl.validate((valid: any, fields: any) => {
     if (valid) {
+      login()
       console.log('login');
 
     } else {

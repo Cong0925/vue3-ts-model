@@ -31,4 +31,17 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     }
   },
+  server: {
+    host: '0.0.0.0',
+    port: 8888,
+    open: true,
+    proxy: {
+      '/api': {
+        target: 'https://www.fastmock.site/mock/b9536a1dea3fe4daeec18bc365e14a18/api',
+        ws: true,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

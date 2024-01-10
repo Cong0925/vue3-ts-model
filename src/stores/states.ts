@@ -1,6 +1,6 @@
 // 在 src/store/index.js 中创建一个简单的 store
+import { UserInfoState } from '@/api/login/types';
 import { defineStore } from 'pinia'
-import { UserInfoState } from "./interface/index"
 
 interface State {
   userForm: UserInfoState;
