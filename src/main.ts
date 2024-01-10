@@ -4,7 +4,7 @@ import App from './App.vue'
 
 // 以下是 完整引入 element plus 时使用
 // import ElementPlus from 'element-plus'
-// import 'element-plus/dist/index.css'
+import 'element-plus/dist/index.css'
 
 
 // 引入图标库，如果您正在使用CDN引入，请删除下面一行。

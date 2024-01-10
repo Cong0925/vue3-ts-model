@@ -20,10 +20,9 @@
       </el-form-item>
 
       <!-- 验证码 -->
-      <el-form-item>
+      <el-form-item prop="code">
         <div class="formInput codeLine">
-          <el-input class="codeInput" @input="checkCodeFun" v-model="checkCode.code" placeholder="输入验证码" clearable
-            maxlength="4" />
+          <el-input class="codeInput" v-model="state.formData.code" placeholder="输入验证码" clearable maxlength="4" />
           <slideVerify class="codeShow" v-model:identifyCode="identifyCode" @click="refresh()"></slideVerify>
         </div>
       </el-form-item>
@@ -44,7 +43,7 @@
 
       <!-- 提交按钮 -->
       <el-form-item label-width="0">
-        <el-button :loading="state.loading" :disabled="!checkCode.isTrue" type="primary" class="loginButton" round
+        <el-button :loading="state.loading" type="primary" class="loginButton" round
           @click="handleSubmita(formRef)">登录</el-button>
       </el-form-item>
 
@@ -54,78 +53,22 @@
 </template>
 
 <script setup lang="ts">
-import { UseLoginApi } from "@/api/login/index"
-import { LoginState } from "@/api/login/types";
-
-const useLoginApi = UseLoginApi()
-const login = () => {
-  let data: LoginState = {
-    username: "admin",
-    password: "admin"
-  }
-  useLoginApi.login(data)
-    .then((res) => {
-      console.log(res);
-
-    })
-    .catch((err) => {
-      console.log(err);
-
-    })
-}
-
 import { reactive, ref } from 'vue';
-
-const state = reactive({
-  loading: false,
-  formData: {
-    username: "admin",
-    password: "admin"
-  }
-})
-const formRef = ref<FormInstance>(); // 创建一个 ref 来引用表单
-const formRules = reactive<FormRules<typeof state.formData>>({
-  username: [{ required: true, message: 'Please input activity form', trigger: 'blur' }],
-  password: [{ required: true, message: 'Please input activity form', trigger: 'blur' }],
-})
-
-// 记住密码，true 或 false
-const rem_pswd = ref(localStorage.getItem('rem_pswd'))
-
-const go_page = (path: string) => {
-  router.push({
-    name: 'login', // 替换为目标路由的名称或路径
-    query: {
-      path: path
-    }
-  })
-}
-
-
-
-const handleSubmita = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.validate((valid: any, fields: any) => {
-    if (valid) {
-      login()
-      console.log('login');
-
-    } else {
-      console.log('error submit!', fields)
-    }
-  })
-}
-
-
-// 生成验证码以及检测
-import slideVerify from "@/components/slideVerify.vue"
 import { FormInstance, FormRules } from 'element-plus';
 import router from '@/router';
-interface CheckCodeType {
-  code: string;
-  isTrue: boolean;
-}
 
+// 导入生成验证码组件
+import slideVerify from "@/components/slideVerify.vue"
+
+// 导入登录 API 方法
+import { UseLoginApi } from "@/api/login/index"
+// 导入登录状态的类型
+import { LoginState } from "@/api/login/types";
+
+// 导入本地存储工具类
+import { Session } from '@/utils/storage';
+// 导入全局状态管理
+import { useMyStore } from '@/stores/states';
 
 // 生成随机验证码
 const generateCode = () => {
@@ -136,25 +79,99 @@ const generateCode = () => {
   }
   return code.value;
 }
-// 传递 验证码给子组件
+// 传递验证码给子组件
 const identifyCode = ref(generateCode())
 // 刷新验证码
 const refresh = () => {
   identifyCode.value = generateCode()
 }
-// 检测输入的验证码，控制提交按钮是否可用
-const checkCodeFun = (newValue: string) => {
-  if ((newValue as string).toUpperCase() === identifyCode.value) {
-    checkCode.isTrue = true
+// 检测输入的验证码，
+const checkCodeFun = (rule: any, value: any, callback: any) => {
+  if ((value as string).toUpperCase() === identifyCode.value) {
+    return true
   } else {
-    checkCode.isTrue = false
+    return false
   }
 }
-const checkCode = reactive<CheckCodeType>({
-  code: identifyCode.value,
-  isTrue: false
+
+// 使用登录 API 方法
+const useLoginApi = UseLoginApi()
+// 使用全局状态管理
+const useUserInfoStore = useMyStore()
+// 定义组件的响应式状态
+interface State {
+  loading: boolean;
+  formData: LoginState;
+}
+
+const state: State = reactive({
+  loading: false,
+  formData: {
+    username: "admin",
+    password: "admin",
+    code: identifyCode.value,
+  },
 })
+
+// 定义登录逻辑
+const login = () => {
+  let data: LoginState = {
+    username: state.formData.username,
+    password: state.formData.password,
+    code: state.formData.code
+  }
+  useLoginApi.login(data)
+    .then((res) => {
+      console.log(res);
+      // 登录成功后的处理逻辑
+      Session.set('token', res.data.token)
+      Session.set('username', res.data.userInfo.user)
+      useUserInfoStore.setUserInfo(res.data.userInfo)
+      useUserInfoStore.setIsLogin(true)
+
+      router.push({
+        name: 'index'
+      })
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+}
+
+// 创建表单的引用
+const formRef = ref<FormInstance>();
+// 定义表单验证规则
+const formRules = reactive<FormRules<typeof state.formData>>({
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  code: [{ required: true, validator: checkCodeFun, message: '请输入验证码', trigger: 'blur' }],
+})
+
+// 记住密码，true 或 false
+const rem_pswd = ref(localStorage.getItem('rem_pswd'))
+
+// 跳转页面的方法
+const go_page = (path: string) => {
+  router.push({
+    name: 'login', // 替换为目标路由的名称或路径
+  })
+}
+
+// 处理表单提交的方法
+const handleSubmita = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.validate((valid: any, fields: any) => {
+    if (valid) {
+      // 表单验证通过，执行登录逻辑
+      login()
+      console.log('login');
+    } else {
+      console.log('error submit!', fields)
+    }
+  })
+}
 </script>
+
 
 <style scoped>
 /* 可以添加一些样式 */

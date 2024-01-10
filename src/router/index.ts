@@ -3,6 +3,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 
 // 导入路由页面的配置
 import routes from './routes'
+import { Session } from '@/utils/storage'
+import { useMyStore } from '@/stores/states'
 
 // 路由参数配置
 const router = createRouter({
@@ -13,6 +15,9 @@ const router = createRouter({
 
 // 全局前置守卫，这里可以加入用户登录判断
 router.beforeEach((to, from, next) => {
+    if(Session.get('token') && (from.path === '/' || to.path === '/index')){
+        useMyStore().setIsLogin(true)
+    }
     // 继续前进 next()
     // 返回 false 以取消导航
     next()

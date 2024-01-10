@@ -22,9 +22,9 @@
               </el-row>
             </div>
             <div class="login_box">
-              <div class="user" v-if="user.isLogin">
+              <div class="user" v-if="useMyStore().isLogin">
                 <el-dropdown>
-                  <span>{{ user.userName }}</span>
+                  <span>{{ Session.get('username') || useMyStore().userForm.user }}</span>
                   <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item @click="goPage('personalSetting')">个人中心</el-dropdown-item>
@@ -47,41 +47,81 @@
 </template>
 
 <script setup lang="ts">
-
-import { reactive, ref } from 'vue'
-import { Search } from '@element-plus/icons-vue'
+import { ref } from 'vue';
+import { Search } from '@element-plus/icons-vue';
 import router from '@/router';
+import { Session } from '@/utils/storage';
+import { useMyStore } from '@/stores/states';
+import { ElMessageBox, ElMessage } from 'element-plus';
+import 'element-plus/dist/index.css';
 
+// 搜索关键词的响应式引用
+const search = ref('');
 
-const search = ref('')
-const user = reactive({
-  userName: "user",//后续登陆后从接口获取，储存到Cookie里获取
-  isLogin: false
-})
 // 退出登录
 const logout = (pageUrl: string) => {
   console.log('logout', pageUrl);
 
-}
-// 跳转页面首页
+  // 弹出确认对话框
+  ElMessageBox.confirm(
+    '确认退出登录？',
+    '提示',
+    {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      // 清空本地存储
+      Session.clear();
+      // 设置全局状态中的登录状态为 false
+      useMyStore().setIsLogin(false);
+      // 跳转到指定页面
+      router.push({ name: pageUrl });
+
+      // 提示退出成功
+      ElMessage({
+        type: 'success',
+        message: '退出成功！',
+      });
+    })
+    .catch(() => {
+      // 提示取消退出
+      ElMessage({
+        type: 'info',
+        message: '取消退出！',
+      });
+    });
+};
+
+// 跳转页面的方法
 const goPage = (pageUrl: string) => {
   if (pageUrl === 'logout') {
-    logout('index')
-  } else if(pageUrl === 'login') {
+    // 如果是退出登录，调用退出登录函数
+    logout('index');
+  } else if (pageUrl === 'login') {
+    // 如果是登录页，带上额外的查询参数
     router.push({
-      name: pageUrl, // 替换为目标路由的名称或路径
-      query:{
-        path:'login'
-      }
+      name: pageUrl,
+      query: {
+        path: 'login',
+      },
     });
-  }else {
-    router.push({
-      name: pageUrl, // 替换为目标路由的名称或路径
-    });
+  } else {
+    console.log(pageUrl);
+    try {
+      // 其他页面直接跳转
+      router.push({
+        name: pageUrl,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
-}
-
+};
 </script>
+
 
 <style scoped>
 /* 整体头部颜色宽度设置 */

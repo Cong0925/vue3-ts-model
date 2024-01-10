@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 
 interface State {
   userForm: UserInfoState;
+  isLogin:boolean;
 }
 
 export const useMyStore = defineStore('myStore', {
@@ -14,12 +15,16 @@ export const useMyStore = defineStore('myStore', {
       age: '',
       sex: ''
     },
+    isLogin:false
     // 其他状态
   }),
   actions: {
     // 动作
     setUserInfo(data:UserInfoState) {
       this.userForm = data
+    },
+    setIsLogin(data:boolean) {
+      this.isLogin = data
     },
 
   },
