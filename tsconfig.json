@@ -31,12 +31,15 @@
     // 开启所有严格类型检查选项
     "strict": true,
     // 报告未使用的局部变量
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     // 报告未使用的函数参数
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     // 报告在 switch 语句中的 case 语句贯穿
     "noFallthroughCasesInSwitch": true,
 
+    // 允许编译 JavaScript 文件
+    "allowJs": true, 
+    
     // 基准 URL，用于解析非相对模块名称
     "baseUrl": ".",
     // 路径映射，用于将导入路径映射到基准 URL 下的特定路径

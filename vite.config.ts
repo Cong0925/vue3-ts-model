@@ -6,15 +6,18 @@ import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ignore from 'rollup-plugin-ignore'
 //手动导入element plus 时
 // import ElementPlus from 'unplugin-element-plus/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  
   plugins: [
+    ignore(['/src/views/other_pro_bak/**']),
     vue(),
     // ElementPlus({
-      
+
     // } ),//手动导入element plus 时
 
     // 以下为按需导入，自动引入手动导入element plus
@@ -44,4 +47,21 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name].${new Date().getTime()}.js`,
+        chunkFileNames: `assets/[name].${new Date().getTime()}.js`,
+        assetFileNames: `assets/[name].${new Date().getTime()}.[ext]`,
+        compact: true,
+        manualChunks: {
+          vue: ['vue', 'vue-router', 'pinia'],
+        },
+      },
+    },
+  },
+  css: { preprocessorOptions: { css: { charset: false } } },
 })

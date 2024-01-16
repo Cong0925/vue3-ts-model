@@ -25,7 +25,7 @@ import newsShow from './components/news.vue'
 import scoreShow from './components/actions.vue'
 
 import { useMyStore } from "@/stores/states"
-import { UserInfoState } from '@/stores/interface';
+import { UserInfoState } from '@/api/login/types';
 
 const useStore = useMyStore()
 const testUseStore = () => {

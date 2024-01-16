@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import Editor from "@tinymce/tinymce-vue";
 import { reactive, ref, toRefs } from "@vue/reactivity";
-
+import 'tinymce';
 const content = ref("默认文字 hello word");
 
 const tiny = reactive({
@@ -87,7 +87,7 @@ const tiny = reactive({
           // registry. In the next release this part hopefully won't be
           // necessary, as we are looking to handle it internally.
           let id = "blobid" + new Date().getTime();
-          let blobCache = tinymce.activeEditor.editorUpload.blobCache;
+          let blobCache = (window as any).tinymce.activeEditor.editorUpload.blobCache;
 
           let base64;
 
